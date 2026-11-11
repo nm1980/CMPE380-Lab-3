@@ -1,0 +1,36 @@
+The primary implementation within the assignment for Lab 3 was to ensure that 
+DynamicArrays.c has no memory leaks, along with implementing the getopt_long f
+eatures inside of TestDarray.c. To deal with allocation and expansion of stora
+ge, malloc was used based on the inputs given from InitialSize to allocate sto
+rage in CreateDArray. To deal with capacity, memory was expanded using realloc
+ inside of PushToDArray. To prevent memory leaks inside of DynamicArrays.c, th
+e free command was run on the payload of the dynamic array alongside setting i
+t to null. This was done to prevent memory leaks by deallocating the dynamic m
+emory that was previously used by the heap and to release the pointer variable
+ from the block in memory. 
+In the TestDarray.c file, the arguments for input, word, and help were impleme
+nted by first adding them to the getoptOptions (i for input, w for word, h for
+ help). The prefixes for the commands were added by using a structure option t
+able, with input and word commands using  required_argument while help used no
+_argument. A while loop is used to continuously call getopt_long_only to proce
+ss inputs for the program. Each of the command line parameters for each input 
+were done by using a switch statement. For i, it assigns the target file path 
+pointer (inFile) based off of optarg to take in input files. For w, it convert
+s the string obtained from the argument in optarg into an integer using atoi()
+, which is used to set entry limits when the program is run. For h, it simply 
+sets the help variable to 1, which notifies the program to display the instruc
+tions on how to set up commands and then exits. The ? and default cases don’t 
+return anything as there's assigned error messages for them inside the code. T
+he TestDarray was tested using several commands inside of the test2 file, and 
+successfully executed all of them without errors, correctly displaying error m
+essages for missing inputs, help text, and entries from the text file given. 
+Valgrind’s Memcheck tool was used to validate the heap allocations for both Dy
+namicArrays and TestDarray using mem1 and mem2 files. DynamicArrays and TestDa
+rray didn’t have any memory leaks, with all blocks being successfully freeded 
+and no leaks being detected after being run. They both returned with 0 bytes a
+nd 0 blocks being used at exit alongside with 0 errors detected, successfully 
+meaning that the programs ran without any issues. For the case of TestDarray, 
+mem2 uses a large amount of inputs from engWords.txt, and although it took aro
+und 1-2 minutes to run, it was still able to successfully ensure that the heap
+ block was allocated correctly and that the dynamic growth from DynamicArrays 
+worked. 
